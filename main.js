@@ -22,11 +22,36 @@ import corpus from './src/plugin/corpus';
 import getGroupFile from './src/plugin/getGroupFile';
 import searchingMap from './src/searchingMap';
 import asyncMap from './src/utils/asyncMap';
+import watchBilibili from './src/plugin/watchBilibili';
+import watchBilibiliry from './src/plugin/watchBilibiliry';
+import watchBilibiliDynamic from './src/plugin/watchBilibiliDynamic';
+
 const ocr = require('./src/plugin/ocr');
 
 const bot = new CQWebSocket(global.config.cqws);
 const logger = new Logger();
 const rand = RandomSeed.create();
+
+
+var fs = require('fs')
+var path2 = require("path")
+var fileList = []
+var jrfileList = []
+//遍历lt库
+function walk(path1){
+  let fileList1 = []
+	var dirList = fs.readdirSync(path1);
+	dirList.forEach(function(item){
+	fileList1.push("file:///"+ path1 + item);
+	});
+  return fileList1;
+}
+fileList =  walk(path2.join(__dirname+"/src/lt/"));
+jrfileList =  walk(path2.join(__dirname+"/src/jr/"));
+
+var spadefile = "file:///"+__dirname+"/src/mp/spade.mp3"
+
+var dggbfile = "file:///"+__dirname+"/src/mp/dggb.mp4"
 
 // 全局变量
 globalReg({
@@ -36,6 +61,12 @@ globalReg({
   parseArgs,
   replySearchMsgs,
   sendGroupForwardMsg,
+  sendprivateMsg,
+  sendGroupMsg,
+  watchBilibiliDynamic_exit,
+  watchBilibili_exit,
+  watchBilibiliry_exit,
+  set_watchbili_exit
 });
 
 // 好友请求
@@ -137,7 +168,41 @@ setInterval(() => {
     }, 60 * 1000);
   }
 }, 60 * 1000);
+//加入检测插件
+var watchBilibili_exit = 0
+var watchBilibiliry_exit = 0
+var watchBilibiliDynamic_exit = 0
+function watchbilibili_plug(){
 
+  if(watchBilibili_exit == 0 && global.config.bot.watchBilibili.enable){
+    watchBilibili_exit = 1 
+    watchBilibili()
+  }
+
+  if(watchBilibiliry_exit == 0 && global.config.bot.watchBilibiliry.enable){
+    watchBilibiliry_exit = 1 
+    watchBilibiliry()
+  }
+
+  if(watchBilibiliDynamic_exit == 0 && global.config.bot.watchBilibiliDynamic.enable){
+    watchBilibiliDynamic_exit = 1
+    watchBilibiliDynamic()
+  }
+}
+
+function set_watchbili_exit(strs){
+  if(strs == 2){
+      watchBilibiliDynamic_exit = 0
+  }
+  if(strs == 1){
+    watchBilibili_exit = 0
+  }
+
+  if(strs == 3){
+    watchBilibiliry_exit = 0
+  }
+}
+watchbilibili_plug()
 // 通用处理
 async function commonHandle(e, context) {
   // 忽略自己发给自己的消息
@@ -164,6 +229,31 @@ async function commonHandle(e, context) {
   }
   if (context.message === '--about') {
     replyMsg(context, 'https://github.com/Tsuk1ko/cq-picsearcher-bot');
+    return true;
+  }
+  if (context.message.includes('嘉门')) {
+    replyMsg(context,CQ.img(jrfileList[getIntRand(jrfileList.length-1)]));
+    return true;
+  }
+  if (context.message.includes('龙图')) {
+    replyMsg(context,CQ.img(fileList[getIntRand(fileList.length-1)]));
+    return true;
+  }
+
+  if (context.message.includes('spade')) {
+    replyMsg(context,CQ.record(spadefile));
+    replyMsg(context,`休想逃之夭夭 快进入我的怀抱
+    猎人扬起嘴角 和骄傲
+    挣扎 已是徒劳
+    反抗 无可救药
+    一张神秘的黑桃
+    我早已 逃之夭夭↑↑↑`);
+    return true;
+  }
+
+  
+  if (context.message.includes('动感光波')) {
+    replyMsg(context,CQ.video(dggbfile));
     return true;
   }
 
@@ -617,6 +707,19 @@ function hasImage(msg) {
   return msg.indexOf('[CQ:image') !== -1;
 }
 
+
+/**
+ * 发送消息给群友 自己加的
+ *
+ * @param {string} message 消息
+ */
+ function sendGroupMsg(message,qqid) {
+  bot('send_group_msg', {
+    group_id: qqid,
+    message
+  });
+
+}
 /**
  * 发送消息给管理员
  *
@@ -631,6 +734,19 @@ function sendMsg2Admin(message) {
     });
   }
 }
+
+
+/**
+* 发送消息给私聊 自己加的
+*
+* @param {string} message 消息
+*/
+function sendprivateMsg(message,qqid) {
+  bot('send_private_msg', {
+    user_id: qqid,
+    message
+  });
+  }
 
 /**
  * 回复消息
@@ -735,6 +851,15 @@ function sendGroupForwardMsg(group_id, msgs) {
  */
 function getRand() {
   return rand.floatBetween(0, 100);
+}
+
+/**
+ * 生成随机整数
+ *
+ * @returns 0到100之间的随机整数
+ */
+ function getIntRand(sz) {
+  return rand.intBetween(0, sz);
 }
 
 function parseArgs(str, enableArray = false, _key = null) {

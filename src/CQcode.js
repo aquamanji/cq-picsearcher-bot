@@ -62,6 +62,19 @@ class CQCode {
 const img = (file, type = null) => new CQCode('image', { file, type }).toString();
 
 /**
+ * CQ码 语音
+ *
+ * @param {string} file 本地文件路径或URL
+ * @param {string} type 类型
+ * @returns CQ码 语音
+ */
+ function record(file, type = null) {
+  const list = ['CQ:record', `file=${escape(file, true)}`];
+  if (type) list.push(`type=${type}`);
+  return `[${list.join(',')}]`;
+}
+
+/**
  * CQ码 Base64 图片
  * @param {string} base64 图片 Base64
  */
@@ -103,4 +116,5 @@ export default {
   video,
   at,
   reply,
+  record,
 };
