@@ -38,7 +38,7 @@
     // saucenao 默认搜索库，可选值：["all", "pixiv", "danbooru", "doujin", "anime"]
     "saucenaoDefaultDB": "all",
     // saucenao 相似度低于这个百分比将被认定为相似度过低
-    "saucenaoLowAcc": 60,
+    "saucenaoLowAcc": 100,
     // 是否在 saucenao 超额时自动换用 ascii2d
     "useAscii2dWhenQuotaExcess": true,
     // 是否在 saucenao 相似度过低时自动使用 ascii2d
@@ -85,7 +85,7 @@
     // setu 相关功能，部分配置的详细说明请查看“wiki-附加功能-setu”以了解更多
     "setu": {
       // 是否启用
-      "enable": true,
+      "enable": false,
       // APIKEY
       "apikey": "0773268760112dc77e4d51",
       // 反和谐方式（0：关闭，1：轻微修改，2：旋转）
@@ -112,7 +112,7 @@
       // 每名用户每日次数限制
       "limit": 30,
       // 群组白名单
-      "whiteGroup": [348508214,147193035,649568377,385018223],
+      "whiteGroup": [348508214,649568377,385018223],
       // 仅允许白名单群使用（与上面的私聊使用是独立的）
       "whiteOnly": false,
       // 白名单群组的群内使用冷却时间（秒），每名用户独立，0 则无冷却
@@ -135,7 +135,7 @@
       // 关闭搜图模式
       "searchModeOff": "^[谢謝]+竹竹$",
       // setu，如果要支持 r18 和关键词参数需要使用捕获组，请查看“wiki-附加功能-setu”以了解更多
-      "setu": "^竹竹.*[来來发發给給][张張个個幅点點份]?(?<r18>[Rr]18的?)?(?<keyword>.*?)?的?[色瑟][图圖]|^--setu$"
+      "setu": "^.*[来來发發给給][张張个個幅点點份]?(?<r18>[Rr]18的?)?(?<keyword>.*?)?的?[色瑟][图圖]|^--setu$"
     },
     // 回复相关设置（设为空字符串将不会回复）
     "replys": {
@@ -225,19 +225,19 @@
     "watchBilibili":{
       "enable":true,
       "qq_private_userid":[386318679],
-      "qq_public_groupid":[348508214,142262449],
+      "qq_public_groupid":[348508214,142262449,677767822],
       "bilibili_watchid":["672328094","703007996","672346917","672353429","351609538","672342685"]
     },    
     "watchBilibiliry":{
       "enable":true,
-      "qq_private_userid":[386318679],
-      "qq_public_groupid":[649568377],
-      "bilibili_watchid":["1096223397"]
+      "qq_private_userid":[],
+      "qq_public_groupid":[],
+      "bilibili_watchid":[]
     },
     "watchBilibiliDynamic":{
       "enable":true,
       "qq_private_userid":[386318679],
-      "qq_public_groupid":[348508214,142262449],
+      "qq_public_groupid":[348508214,142262449,677767822],
       "bilibili_watchid":["672328094","703007996","672346917","672353429","351609538","672342685"]
     }
   },
