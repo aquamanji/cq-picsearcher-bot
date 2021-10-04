@@ -25,6 +25,7 @@ import asyncMap from './src/utils/asyncMap';
 import watchBilibili from './src/plugin/watchBilibili';
 import watchBilibiliry from './src/plugin/watchBilibiliry';
 import watchBilibiliDynamic from './src/plugin/watchBilibiliDynamic';
+import watchTiktok from './src/plugin/watchTiktok';
 
 const ocr = require('./src/plugin/ocr');
 
@@ -168,6 +169,8 @@ setInterval(() => {
     }, 60 * 1000);
   }
 }, 60 * 1000);
+//加入watchTiktok
+watchTiktok();
 //加入检测插件
 var watchBilibili_exit = 0
 var watchBilibiliry_exit = 0
