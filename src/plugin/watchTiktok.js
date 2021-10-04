@@ -51,7 +51,7 @@ async function watchTiktok(){
             for(let prelement of watchBilibili_config['qq_public_groupid']){
                 console.log('进入循环')
                 await sleep(500)
-                await global.sendGroupMsg(`内容：${desc}\n抖音链接：${dyurl}\n`,'348508214')
+                await global.sendGroupMsg(`内容：${desc}\n抖音链接：${dyurl}\n`,prelement)
             }
             
         }else{
