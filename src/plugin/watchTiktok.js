@@ -34,6 +34,7 @@ async function getTikmsg(secUid){
 async function watchTiktok(){
     await sleep(12000)
     for(var element in asoul){
+        await sleep(1000)
         let res = await getTikmsg(asoul[element])
         let aweme_id = res['data']['aweme_list'][0]['aweme_id']
         let desc = res['data']['aweme_list'][0]['desc']
@@ -45,13 +46,13 @@ async function watchTiktok(){
             let dyurl = "https://www.douyin.com/video/"+aweme_id
             for(let prelement of watchBilibili_config['qq_private_userid']){
                 await sleep(500)
-                await global.sendprivateMsg(`内容：${desc}\n抖音链接：${dyurl}\n`,prelement)
+                await global.sendprivateMsg(`内容：${desc}\n抖音链接：${dyurl}`,prelement)
             }
             await sleep(2000)
             for(let pbelement of watchBilibili_config['qq_public_groupid']){
                 console.log('进入循环')
                 await sleep(500)
-                await global.sendGroupMsg(`内容：${desc}\n抖音链接：${dyurl}\n`,pbelement)
+                await global.sendGroupMsg(`内容：${desc}\n抖音链接：${dyurl}`,pbelement)
             }
             
         }else{
