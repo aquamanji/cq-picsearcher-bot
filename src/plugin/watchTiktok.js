@@ -38,13 +38,14 @@ async function watchTiktok(){
     for(var element in asoul){
         let res = await getTikmsg(asoul[element])
        if(res){
+                try{
                 let aweme_id = res['data']['aweme_list'][0]['aweme_id']
                 let desc = res['data']['aweme_list'][0]['desc']
                 if(restart_status[element] === 0){
                     qjdynamic_str[element]=aweme_id;
                 }
                 if(qjdynamic_str[element]!=aweme_id){
-                    console.log('检测到更新')
+                    console.log('检测到'+element+'更新')
                     qjdynamic_str[element] = aweme_id
                     let dyurl = "https://www.douyin.com/video/"+aweme_id
                     for(let prelement of watchBilibili_config['qq_private_userid']){
@@ -64,6 +65,10 @@ async function watchTiktok(){
                 restart_status[element]+=1
                 console.log(aweme_id)
                 console.log(desc)
+                }catch(e){
+                    console.log('发生错误')
+                }
+                
             }
     }
     watchTiktok();

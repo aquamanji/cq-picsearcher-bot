@@ -36,31 +36,37 @@ async function watchBilibili(){
         }
     let res = await getRoomInfoData(element)
         if(res){
-            res = res['data']['data']
-            console.log(res['url'])
-            if(res['roomStatus']===0){
-                console.log('不存在')
-            }else{
-                if(res['liveStatus']!=WatchLiveStatus[element]){
-                    
-                    if(res['liveStatus'] === 1){
-
-                        for(let prelement of watchBilibili_config['qq_private_userid']){
-                            await sleep(500)
-                            await global.sendprivateMsg(`开播啦\n直播间地址：${res['url']}\n直播间标题：${res['title']}\n直播间封面：${CQ.img(res['cover'])}`,prelement)
+            
+            try{
+                res = res['data']['data']
+                console.log(res['url'])
+                if(res['roomStatus']===0){
+                    console.log('不存在')
+                }else{
+                    if(res['liveStatus']!=WatchLiveStatus[element]){
+                        
+                        if(res['liveStatus'] === 1){
+    
+                            for(let prelement of watchBilibili_config['qq_private_userid']){
+                                await sleep(500)
+                                await global.sendprivateMsg(`开播啦\n直播间地址：${res['url']}\n直播间标题：${res['title']}\n直播间封面：${CQ.img(res['cover'])}`,prelement)
+                            }
+                            await sleep(2000)
+                            for(let pbelement of watchBilibili_config['qq_public_groupid']){
+                                await sleep(500)
+                                await global.sendGroupMsg(`开播啦\n直播间地址：${res['url']}\n直播间标题：${res['title']}\n直播间封面：${CQ.img(res['cover'])}`,pbelement)
+                            }
+                            WatchLiveStatus[element] = res['liveStatus']
+                        }else{
+                            WatchLiveStatus[element] = res['liveStatus']
                         }
-                        await sleep(2000)
-                        for(let pbelement of watchBilibili_config['qq_public_groupid']){
-                            await sleep(500)
-                            await global.sendGroupMsg(`开播啦\n直播间地址：${res['url']}\n直播间标题：${res['title']}\n直播间封面：${CQ.img(res['cover'])}`,pbelement)
-                        }
-                        WatchLiveStatus[element] = res['liveStatus']
-                    }else{
-                        WatchLiveStatus[element] = res['liveStatus']
                     }
                 }
+
+            }catch(e){
+                console.log('获取直播间信息错误')
             }
-        }
+        }1
     }
     if(global.config.bot.watchBilibili.enable){
         watchBilibili()
