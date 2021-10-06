@@ -10,6 +10,7 @@ const asoul = {
     "珈乐": "MS4wLjABAAAAuZHC7vwqRhPzdeTb24HS7So91u9ucl9c8JjpOS2CPK-9Kg2D32Sj7-mZYvUCJCya",
     "贝拉": "MS4wLjABAAAAlpnJ0bXVDV6BNgbHUYVWnnIagRqeeZyNyXB84JXTqAS5tgGjAtw0ZZkv0KSHYyhP",
     "羊驼": "MS4wLjABAAAAflgvVQ5O1K4RfgUu3k0A2erAZSK7RsdiqPAvxcObn93x2vk4SKk1eUb6l_D4MX-n"
+    // "主子":"MS4wLjABAAAAIbSoqnS0Nv1fu6HOtA6ThXsyGTmpWncKs5Cl8jV3ysc"
 }
 var qjdynamic_str = new Object();
 var restart_status = new Object();
@@ -20,6 +21,7 @@ for(let element in asoul){
     restart_status[element] = 0 //判断重启
 }
 async function getTikmsg(secUid){
+    await sleep(12000)
     return await axios({
         url:"https://www.iesdouyin.com/web/api/v2/aweme/post/?sec_uid="+secUid+"&count=21",
         method: "GET",
@@ -32,35 +34,37 @@ async function getTikmsg(secUid){
       });
 }
 async function watchTiktok(){
-    await sleep(12000)
+    await sleep(1000)
     for(var element in asoul){
-        await sleep(1000)
         let res = await getTikmsg(asoul[element])
-        let aweme_id = res['data']['aweme_list'][0]['aweme_id']
-        let desc = res['data']['aweme_list'][0]['desc']
-        if(restart_status[element] === 0){
-            qjdynamic_str[element]=aweme_id;
-        }
-        if(qjdynamic_str[element]!=aweme_id){
-            qjdynamic_str[element] = aweme_id
-            let dyurl = "https://www.douyin.com/video/"+aweme_id
-            for(let prelement of watchBilibili_config['qq_private_userid']){
-                await sleep(500)
-                await global.sendprivateMsg(`内容：${desc}\n抖音链接：${dyurl}`,prelement)
+       if(res){
+                let aweme_id = res['data']['aweme_list'][0]['aweme_id']
+                let desc = res['data']['aweme_list'][0]['desc']
+                if(restart_status[element] === 0){
+                    qjdynamic_str[element]=aweme_id;
+                }
+                if(qjdynamic_str[element]!=aweme_id){
+                    console.log('检测到更新')
+                    qjdynamic_str[element] = aweme_id
+                    let dyurl = "https://www.douyin.com/video/"+aweme_id
+                    for(let prelement of watchBilibili_config['qq_private_userid']){
+                        await sleep(500)
+                        await global.sendprivateMsg(`${element}更新啦\n 内容：${desc}\n dy地址：${dyurl}`,prelement)
+                    }
+                    await sleep(2000)
+                    for(let pbelement of watchBilibili_config['qq_public_groupid']){
+                        console.log('进入循环')
+                        await sleep(500)
+                        await global.sendGroupMsg(`${element}更新啦\n内容：${desc}\n dy地址：${dyurl}`,pbelement)
+                    }
+                    
+                }else{
+                    console.log('未检测到更新')
+                }
+                restart_status[element]+=1
+                console.log(aweme_id)
+                console.log(desc)
             }
-            await sleep(2000)
-            for(let pbelement of watchBilibili_config['qq_public_groupid']){
-                console.log('进入循环')
-                await sleep(500)
-                await global.sendGroupMsg(`内容：${desc}\n抖音链接：${dyurl}`,pbelement)
-            }
-            
-        }else{
-            console.log('未检测到更新')
-        }
-        restart_status[element]+=1
-        console.log(aweme_id)
-        console.log(desc)
     }
     watchTiktok();
         
