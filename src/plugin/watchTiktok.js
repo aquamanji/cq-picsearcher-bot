@@ -21,7 +21,7 @@ for(let element in asoul){
     restart_status[element] = 0 //判断重启
 }
 async function getTikmsg(secUid){
-    await sleep(12000)
+    await sleep(60000)
     return await axios({
         url:"https://www.iesdouyin.com/web/api/v2/aweme/post/?sec_uid="+secUid+"&count=21",
         method: "GET",

@@ -26,6 +26,7 @@ import watchBilibili from './src/plugin/watchBilibili';
 import watchBilibiliry from './src/plugin/watchBilibiliry';
 import watchBilibiliDynamic from './src/plugin/watchBilibiliDynamic';
 import watchTiktok from './src/plugin/watchTiktok';
+import asoulRise from './src/plugin/asoulRise';
 
 const ocr = require('./src/plugin/ocr');
 
@@ -54,6 +55,8 @@ var spadefile = "file:///"+__dirname+"/src/mp/spade.mp3"
 
 var dggbfile = "file:///"+__dirname+"/src/mp/dggb.mp4"
 
+var asoulobj = {}//成员涨粉情况
+
 // 全局变量
 globalReg({
   bot,
@@ -67,7 +70,8 @@ globalReg({
   watchBilibiliDynamic_exit,
   watchBilibili_exit,
   watchBilibiliry_exit,
-  set_watchbili_exit
+  set_watchbili_exit,
+  set_asoulobj
 });
 
 // 好友请求
@@ -205,7 +209,12 @@ function set_watchbili_exit(strs){
     watchBilibiliry_exit = 0
   }
 }
+
+function set_asoulobj(obj){
+  asoulobj = obj;
+}
 watchbilibili_plug()
+asoulRise()
 // 通用处理
 async function commonHandle(e, context) {
   // 忽略自己发给自己的消息
@@ -245,12 +254,24 @@ async function commonHandle(e, context) {
 
   if (context.message.includes('spade')) {
     replyMsg(context,CQ.record(spadefile));
-    replyMsg(context,`休想逃之夭夭 快进入我的怀抱
-    猎人扬起嘴角 和骄傲
-    挣扎 已是徒劳
-    反抗 无可救药
-    一张神秘的黑桃
-    我早已 逃之夭夭↑↑↑`);
+    replyMsg(context,`休想逃之夭夭💃💃💃快进入我的怀抱🕺🕺🕺
+猎人扬起嘴角☺️和骄傲😇
+挣扎🏊 已是徒劳🏌️🏌️🏌️
+抵抗👼 无可救💊
+一张神秘的♠️
+我早已🏇🏇🏇逃之夭夭↑↑↑🤡`);
+    return true;
+  }
+
+  if(context.message.includes('asouldc')){
+    console.log(asoulobj)
+    replyMsg(context,`🍬乡民报🍬
+嘉然今日涨粉：${asoulobj['嘉然'].rise},现有关注量：${asoulobj['嘉然'].follower}
+向晚今日涨粉：${asoulobj['向晚'].rise},现有关注量：${asoulobj['向晚'].follower}
+乃琳今日涨粉：${asoulobj['乃琳'].rise},现有关注量：${asoulobj['乃琳'].follower}
+贝拉今日涨粉：${asoulobj['贝拉'].rise},现有关注量：${asoulobj['贝拉'].follower}
+珈乐今日涨粉：${asoulobj['珈乐'].rise},现有关注量：${asoulobj['珈乐'].follower}`
+    )
     return true;
   }
 
