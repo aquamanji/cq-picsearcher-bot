@@ -27,7 +27,7 @@ import watchBilibiliry from './src/plugin/watchBilibiliry';
 import watchBilibiliDynamic from './src/plugin/watchBilibiliDynamic';
 import watchTiktok from './src/plugin/watchTiktok';
 import asoulRise from './src/plugin/asoulRise';
-
+import watchAsoulSchedule from './src/plugin/watchAsoulSchedule';
 const ocr = require('./src/plugin/ocr');
 
 const bot = new CQWebSocket(global.config.cqws);
@@ -39,6 +39,7 @@ var fs = require('fs')
 var path2 = require("path")
 var fileList = []
 var jrfileList = []
+var photos = []
 //遍历lt库
 function walk(path1){
   let fileList1 = []
@@ -71,7 +72,8 @@ globalReg({
   watchBilibili_exit,
   watchBilibiliry_exit,
   set_watchbili_exit,
-  set_asoulobj
+  set_asoulobj,
+  set_photos
 });
 
 // 好友请求
@@ -175,6 +177,7 @@ setInterval(() => {
 }, 60 * 1000);
 //加入watchTiktok
 watchTiktok();
+watchAsoulSchedule();
 //加入检测插件
 var watchBilibili_exit = 0
 var watchBilibiliry_exit = 0
@@ -213,6 +216,10 @@ function set_watchbili_exit(strs){
 function set_asoulobj(obj){
   asoulobj = obj;
 }
+
+function   set_photos(p){
+  photos = p
+}
 watchbilibili_plug()
 asoulRise()
 // 通用处理
@@ -240,7 +247,8 @@ async function commonHandle(e, context) {
     return true;
   }
   if (context.message === '--about') {
-    replyMsg(context, 'https://github.com/Tsuk1ko/cq-picsearcher-bot');
+    replyMsg(context, `说明：asoutime -- 日程表
+    asouldc --涨粉表`);
     return true;
   }
   if (context.message.includes('嘉门')) {
@@ -249,6 +257,13 @@ async function commonHandle(e, context) {
   }
   if (context.message.includes('龙图')) {
     replyMsg(context,CQ.img(fileList[getIntRand(fileList.length-1)]));
+    return true;
+  }
+
+  if(context.message.includes('asoultime')){
+    for(let picurl of photos){
+      replyMsg(context,CQ.img(picurl['img_src']))
+    }
     return true;
   }
 
@@ -265,7 +280,7 @@ async function commonHandle(e, context) {
 
   if(context.message.includes('asouldc')){
     console.log(asoulobj)
-    replyMsg(context,`🍬乡民报🍬
+    replyMsg(context,`🍬涨粉报🍬
 嘉然今日涨粉：${asoulobj['嘉然'].rise},现有关注量：${asoulobj['嘉然'].follower}
 向晚今日涨粉：${asoulobj['向晚'].rise},现有关注量：${asoulobj['向晚'].follower}
 乃琳今日涨粉：${asoulobj['乃琳'].rise},现有关注量：${asoulobj['乃琳'].follower}
