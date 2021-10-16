@@ -281,11 +281,11 @@ async function commonHandle(e, context) {
   if(context.message.includes('asouldc')){
     console.log(asoulobj)
     replyMsg(context,`🍬涨粉报🍬
-嘉然今日涨粉：${asoulobj['嘉然'].rise},现有关注量：${asoulobj['嘉然'].follower}
-向晚今日涨粉：${asoulobj['向晚'].rise},现有关注量：${asoulobj['向晚'].follower}
-乃琳今日涨粉：${asoulobj['乃琳'].rise},现有关注量：${asoulobj['乃琳'].follower}
-贝拉今日涨粉：${asoulobj['贝拉'].rise},现有关注量：${asoulobj['贝拉'].follower}
-珈乐今日涨粉：${asoulobj['珈乐'].rise},现有关注量：${asoulobj['珈乐'].follower}`
+嘉然关注量：${asoulobj['嘉然'].follower}(${asoulobj['嘉然'].rise}),舰长数：${asoulobj['嘉然'].guardNum}(${asoulobj['嘉然'].guardRise})
+向晚关注量：${asoulobj['向晚'].follower}(${asoulobj['向晚'].rise}),舰长数：${asoulobj['向晚'].guardNum}(${asoulobj['向晚'].guardRise})
+乃琳关注量：${asoulobj['乃琳'].follower}(${asoulobj['乃琳'].rise}),舰长数：${asoulobj['乃琳'].guardNum}(${asoulobj['乃琳'].guardRise})
+贝拉关注量：${asoulobj['贝拉'].follower}(${asoulobj['贝拉'].rise}),舰长数：${asoulobj['贝拉'].guardNum}(${asoulobj['贝拉'].guardRise})
+珈乐关注量：${asoulobj['珈乐'].follower}(${asoulobj['珈乐'].rise}),舰长数：${asoulobj['珈乐'].guardNum}(${asoulobj['珈乐'].guardRise})`
     )
     return true;
   }

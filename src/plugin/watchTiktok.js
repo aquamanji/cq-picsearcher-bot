@@ -21,7 +21,6 @@ for(let element in asoul){
     restart_status[element] = 0 //判断重启
 }
 async function getTikmsg(secUid){
-    await sleep(60000)
     return await axios({
         url:"https://www.iesdouyin.com/web/api/v2/aweme/post/?sec_uid="+secUid+"&count=21",
         method: "GET",
@@ -30,6 +29,7 @@ async function getTikmsg(secUid){
         }
     }).catch(e => {
         console.log('DY获取失败')
+        console.log(e)
         return null;
       });
 }
@@ -70,6 +70,7 @@ async function watchTiktok(){
                 }
                 
             }
+        await sleep(60000)
     }
     watchTiktok();
         
