@@ -21,7 +21,6 @@ async function watchAsoulSchedule(){
     let res = await getAsoulSchedule();
     let cards = res['data']['data']['cards']
     for(let element of cards){
-    
         if(element['desc']['type']==2){
             let pictures = JSON.parse(element['card'])['item']['pictures']
             set_photos(pictures)

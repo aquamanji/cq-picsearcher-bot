@@ -261,6 +261,7 @@ async function commonHandle(e, context) {
   }
 
   if(context.message.includes('asoultime')){
+    console.log(photos)
     for(let picurl of photos){
       replyMsg(context,CQ.img(picurl['img_src']))
     }
