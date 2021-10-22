@@ -261,11 +261,8 @@ async function commonHandle(e, context) {
   }
 
   if(context.message.includes('asoultime')){
-    for(let picurl of photos){
-      console.log(1)
-      console.log(picurl)
-      replyMsg(context,CQ.img(picurl['img_src']))
-    }
+
+    await getAsoulScheduleArry(photos,context);
     return true;
   }
 
@@ -525,6 +522,21 @@ async function groupMsg(e, context) {
       }, 2000);
     }
   }
+}
+
+
+/**
+ * 
+ * @param {*} context 
+ * @param {*} customDB 
+ * @returns 
+ */
+async function getAsoulScheduleArry(picarr,context){
+  for(let picurl of picarr){
+      console.log(1)
+      console.log(picurl)
+      replyMsg(context,CQ.img(picurl['img_src']))
+    }
 }
 
 /**
