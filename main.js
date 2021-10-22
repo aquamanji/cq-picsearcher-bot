@@ -526,17 +526,19 @@ async function groupMsg(e, context) {
 
 
 /**
- * 
+ * 发送日程表
  * @param {*} context 
  * @param {*} customDB 
  * @returns 
  */
 async function getAsoulScheduleArry(picarr,context){
+  let msg = `日程表`
   for(let picurl of picarr){
       console.log(1)
       console.log(picurl)
-      replyMsg(context,CQ.img(picurl['img_src']))
+      msg = msg + CQ.img(picurl['img_src']) 
     }
+    replyMsg(context,msg)
 }
 
 /**
