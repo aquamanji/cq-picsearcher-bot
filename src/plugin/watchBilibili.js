@@ -11,14 +11,14 @@ for(let element of watchBilibili_config['bilibili_watchid']){
 }
 
 async function getRoomInfoData(id){
-    await sleep(11000)
+    await sleep(13000)
     return await axios({
-        url:"https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid="+id,
+        url:"http://api.bilibili.com/x/space/acc/info?mid="+id,
         method: "GET",
         headers: {"User-Agent": "Mozilla/5.0",
         "Referer": "https://www.bilibili.com/"}
     }).catch(e => {
-        console.log('zb获取失败')
+        console.log('直播获取失败')
         return null;
       });
 
@@ -38,7 +38,7 @@ async function watchBilibili(){
         if(res){
             
             try{
-                res = res['data']['data']
+                res = res['data']['data']['live_room']
                 console.log(res['url'])
                 if(res['roomStatus']===0){
                     console.log('不存在')

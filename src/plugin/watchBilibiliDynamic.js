@@ -13,7 +13,7 @@ for(let element of watchBilibiliDynamic_config['bilibili_watchid']){
     restart_status[element] = 0
 }
 async function getdynamicInfoData(id){
-    await sleep(12000)
+    await sleep(16000)
     return await axios({
         url:"https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid="+id+"&offset_dynamic_id=0&need_top=0",
         method: "GET",
@@ -28,8 +28,9 @@ async function getdynamicInfoData(id){
 }
 
 async function watchBilibiliDynamic(){
-    await sleep(1000)
+    await sleep(2000)
     watchBilibiliDynamic_config = global.config.bot.watchBilibiliDynamic
+    try{
     for(let element of watchBilibiliDynamic_config['bilibili_watchid']){
     if(!global.config.bot.watchBilibiliDynamic.enable){
         global.sendprivateMsg("动态监视插件结束",386318679)
@@ -39,7 +40,6 @@ async function watchBilibiliDynamic(){
     }
     let res = await getdynamicInfoData(element)
     if(res){
-
             try{
                 res = res['data']['data']['cards'][0]
                 var time = new Date(res['desc']['timestamp']*1000).toLocaleString()
@@ -133,9 +133,11 @@ async function watchBilibiliDynamic(){
         
         }
     }
-    if(global.config.bot.watchBilibiliDynamic.enable){
-        watchBilibiliDynamic()
+    }catch(e){
+        console.log("动态未知错误")
     }
+        watchBilibiliDynamic()
+    
 }
 
 

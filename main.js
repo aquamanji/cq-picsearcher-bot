@@ -164,7 +164,7 @@ bot
 
 // connect
 bot.connect();
-
+console.log("是否多次运行");
 // 每日任务
 setInterval(() => {
   if (bot.isReady() && logger.canDoDailyJob()) {
