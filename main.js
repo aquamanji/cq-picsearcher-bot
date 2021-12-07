@@ -53,6 +53,7 @@ fileList =  walk(path2.join(__dirname+"/src/lt/"));
 jrfileList =  walk(path2.join(__dirname+"/src/jr/"));
 
 var spadefile = "file:///"+__dirname+"/src/mp/spade.mp3"
+var takeoverfile = "file:///"+__dirname+"/src/mp/takeover.mp3"
 
 var dggbfile = "file:///"+__dirname+"/src/mp/dggb.mp4"
 
@@ -274,6 +275,11 @@ async function commonHandle(e, context) {
 抵抗👼 无可救💊
 一张神秘的♠️
 我早已🏇🏇🏇逃之夭夭↑↑↑🤡`);
+    return true;
+  }
+  if (context.message.includes('takeoverfile')) {
+    replyMsg(context,CQ.record(takeoverfile));
+    replyMsg(context,`take over入坑,从此茶饭不思`);
     return true;
   }
 
