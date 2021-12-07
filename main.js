@@ -277,7 +277,7 @@ async function commonHandle(e, context) {
 我早已🏇🏇🏇逃之夭夭↑↑↑🤡`);
     return true;
   }
-  if (context.message.includes('takeoverfile')) {
+  if (context.message.includes('take')&&context.message.includes('over')) {
     replyMsg(context,CQ.record(takeoverfile));
     replyMsg(context,`take over入坑,从此茶饭不思`);
     return true;
