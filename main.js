@@ -55,6 +55,8 @@ jrfileList =  walk(path2.join(__dirname+"/src/jr/"));
 var spadefile = "file:///"+__dirname+"/src/mp/spade.mp3"
 var takeoverfile = "file:///"+__dirname+"/src/mp/takeover.mp3"
 
+var s10picfile = "file:///"+__dirname+"/src/mp/s10.jpg"
+
 var dggbfile = "file:///"+__dirname+"/src/mp/dggb.mp4"
 
 var asoulobj = {}//成员涨粉情况
@@ -279,7 +281,7 @@ async function commonHandle(e, context) {
   }
   if (context.message.includes('take')&&context.message.includes('over')) {
     replyMsg(context,CQ.record(takeoverfile));
-    replyMsg(context,`take over入坑,从此茶饭不思`);
+    replyMsg(context,`take over入坑,从此茶饭不思${CQ.img(s10picfile)}`);
     return true;
   }
 
