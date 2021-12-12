@@ -39,7 +39,6 @@ async function watchBilibiliDynamic(){
         break
     }
     let res = await getdynamicInfoData(element)
-    if(res){
             try{
                 res = res['data']['data']['cards'][0]
                 var time = new Date(res['desc']['timestamp']*1000).toLocaleString()
@@ -131,7 +130,7 @@ async function watchBilibiliDynamic(){
                     console.log('动态获取错误')
             }
         
-        }
+        
     }
     }catch(e){
         console.log("动态未知错误")
